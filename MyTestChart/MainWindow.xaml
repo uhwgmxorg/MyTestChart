@@ -1,0 +1,69 @@
+﻿<Window x:Class="MyTestChart.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MyTestChart"
+        xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0" 
+        Title="MainWindow" Height="519" Width="849" 
+        Name="windows_Main" Loaded="Windows_Main_Loaded">
+    <Grid>
+        <Grid.Resources>
+            <local:DoubleToStringConverter x:Key="conv" />
+            <local:DateToStringConverter x:Key="dsconv" /> 
+        </Grid.Resources>
+        <d3:ChartPlotter Margin="21,69,393,78" Name="chartPlotter1">
+            <d3:ChartPlotter.MainHorizontalAxis>
+                <d3:HorizontalDateTimeAxis x:Name="timeAxis"/>
+            </d3:ChartPlotter.MainHorizontalAxis>
+        </d3:ChartPlotter>
+        <Label Content="MyTestChart" Height="28" HorizontalAlignment="Left" Margin="36,11,0,0" VerticalAlignment="Top" Width="132" FontFamily="Arial Black" Foreground="#FF88052A" FontSize="16" />
+        <Label Content="0" FontFamily="Arial Black" FontSize="13.333" Foreground="#FF88052A" Height="28" HorizontalAlignment="Right" Margin="0,10,353,0" Name="label_Number" VerticalAlignment="Top" Width="71" />
+        <Label Content="01.01.1900 00:00:00 000" FontFamily="Arial Black" FontSize="13.333" Foreground="#FF88052A" Height="28" HorizontalAlignment="Right" Margin="0,11,109,0" Name="label_Date" VerticalAlignment="Top" Width="238" />
+        <Label Content="0,00" Height="28" HorizontalAlignment="Right" Margin="0,11,12,0" Name="label_RandomFloat" VerticalAlignment="Top" Width="90" FontFamily="Arial Black" Foreground="#FF88052A" FontSize="13.333" />
+        <TextBox Foreground="#FF88052A" Margin="12,37,93,0" Name="label_Debug" Height="25" VerticalAlignment="Top" />
+        <Label Content="Min" Foreground="#FF88052A" HorizontalAlignment="Right" Margin="0,35,49,0" Width="38" Height="28" VerticalAlignment="Top" />
+        <Label Content="Max" Foreground="#FF88052A" Height="28" HorizontalAlignment="Right" Margin="0,35,12,0" VerticalAlignment="Top" Width="41" />
+        <Label Content="{Binding Value, Converter={StaticResource conv}, ElementName=slider_Min}" Foreground="#FF88052A" Height="28" HorizontalAlignment="Right" Margin="0,56,49,0" Name="label_Min" VerticalAlignment="Top" Width="34" />
+        <Label Content="{Binding Value, Converter={StaticResource conv}, ElementName=slider_Max}" Foreground="#FF88052A" Height="28" HorizontalAlignment="Right" Margin="0,56,10,0" Name="label_Max" VerticalAlignment="Top" Width="34" />
+        <Slider Height="23" HorizontalAlignment="Right" Margin="0,134.125,7.875,0" Name="slider_Min" VerticalAlignment="Top" Width="126.25" RenderTransformOrigin="0.5,0.5" Maximum="60" ToolTip="Min Random Value">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+        <Slider Height="23" HorizontalAlignment="Right" Margin="0,134.25,-32.25,0" Name="slider_Max" VerticalAlignment="Top" Width="126.5" RenderTransformOrigin="0.5,0.5" Maximum="60" ToolTip="Max Random Value">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+        <ListView HorizontalAlignment="Right" Margin="0,69,93,12" Name="listView_Values" Width="284" ItemsSource="{Binding Measurements}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="40" Header="No" DisplayMemberBinding="{Binding Number}"  />
+                    <GridViewColumn Width="150" Header="Time" DisplayMemberBinding="{Binding Time,Converter={StaticResource dsconv}}"  />
+                    <GridViewColumn Width="60" Header="Value" DisplayMemberBinding="{Binding Value}" />
+                </GridView>
+            </ListView.View>    
+        </ListView>
+        <Button Content="#1" Height="23" HorizontalAlignment="Right" Margin="0,0,12,215" Name="button1" VerticalAlignment="Bottom" Width="75" Click="Button1_Click" ToolTip="Get one random number" />
+        <Button Content="#2" Height="23" HorizontalAlignment="Right" Margin="0,0,12,186" Name="button2" VerticalAlignment="Bottom" Width="75" Click="Button2_Click" ToolTip="Create a full random data list an displays it" />
+        <Button Content="#3" Height="23" HorizontalAlignment="Right" Margin="0,0,12,157" Name="button3" VerticalAlignment="Bottom" Width="75" Click="Button3_Click" ToolTip="Create one random data pair and displays it" />
+        <Button Content="#4" Height="23" HorizontalAlignment="Right" Margin="0,0,12,128" Name="button4" VerticalAlignment="Bottom" Width="75" Click="Button4_Click" ToolTip="Hide and displays the legend" />
+        <Button Content="Clear Chart" Height="23" HorizontalAlignment="Right" Name="button_ClearChart" VerticalAlignment="Bottom" Width="75" IsEnabled="True"  Margin="0,0,12,99" Click="Button_ClearChart_Click" />
+        <Button Content="Start" Height="23" HorizontalAlignment="Right" Name="button_Start" VerticalAlignment="Bottom" Width="75" IsEnabled="True"  Margin="0,0,12,70" Click="Button_Start_Click" />
+        <Button Content="Stop" Height="23" HorizontalAlignment="Right" Name="button_Stop" VerticalAlignment="Bottom" Width="75" IsEnabled="True"  Margin="0,0,12,41" Click="Button_Stop_Click" />
+        <Button Content="Close" HorizontalAlignment="Right" Name="button_Close" Width="75" IsEnabled="True" Margin="0,0,12,12" Height="23" VerticalAlignment="Bottom" Click="Button_Close_Click" />
+        <Slider Height="23" HorizontalAlignment="Left" Margin="49,0,0,41" Maximum="300" Minimum="10" Name="slider_ListSize" ToolTip="Total of Records" VerticalAlignment="Bottom" Width="222" ValueChanged="Slider_ListSize_ValueChanged" />
+        <Label Content="Label" Foreground="#FF88052A" Height="28" HorizontalAlignment="Left" Margin="291,0,0,36" Name="label_ListSize" VerticalAlignment="Bottom" Width="74" />
+        <Slider Height="23" HorizontalAlignment="Left" Margin="49,0,0,7" Name="slider_TimerTick" VerticalAlignment="Bottom" Width="222"  Maximum="300" Minimum="10" ValueChanged="Slider_TimerTick_ValueChanged" ToolTip="Delay betwen values" />
+        <Label Content="Label" Height="28" HorizontalAlignment="Left" Margin="291,0,0,2" Name="label_TimerTickValue" VerticalAlignment="Bottom" Width="74" Foreground="#FF88052A" />
+    </Grid>
+</Window>
